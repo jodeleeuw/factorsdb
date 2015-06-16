@@ -1,6 +1,6 @@
 ---
 title: Hello, World!
-layout:default
+layout: default
 ---
 
 # hello world!
