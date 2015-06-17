@@ -3,7 +3,7 @@ title: Hello, World!
 layout: default
 ---
 
-# hello world!
+# experiment list
 
 {% for exp in site.experiments %}
 <div class="panel panel-default">
