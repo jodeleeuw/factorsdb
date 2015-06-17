@@ -2,6 +2,7 @@ name: "Psych Demos"
 description: "Browser-based psychology experiments for teaching"
 
 url: "jodeleeuw.github.io/psychdemos"
+baseurl: "/psychdemos"
 
 paginate: 10
 
