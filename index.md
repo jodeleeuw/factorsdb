@@ -10,7 +10,7 @@ layout: default
   <div class="panel-heading">{{ exp.title }}</div>
   <div class="panel-body">
     <p> {{ exp.description }} </p>
-    <a href="{{ exp.url }}" class="btn btn-default">Start Experiment</a>
+    <a href="{{ site.baseurl }}{{ exp.url }}" class="btn btn-default">Start Experiment</a>
   </div>
 </div>
 {% endfor %}
