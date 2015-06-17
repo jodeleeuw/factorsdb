@@ -7,3 +7,14 @@ paginate: 10
 
 markdown: rdiscount
 permalink: pretty
+
+collections:
+  experiments:
+    output: true
+
+defaults:
+  - scope:
+      path: ""
+      type: experiments
+    values:
+      layout: experiment

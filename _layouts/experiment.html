@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ site.name }}</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="jsPsych/{{ page.jspsych_version }}/jspsych.js"></script>
+  {% for plugin in page.required_plugins %}
+  <script src="jsPsych/{{ page.jspsych_version }}/plugins/jspsych-{{ plugin }}.js"></script>
+  {% endfor %}
+  <script src="jsPsych/{{ page.jspsych_version }}/css/jspsych.css"></script>
+</head>
+<body>
+  <div id="jspsych-target">
+  </div>
+</body>
+
+<script>
+{{ content }}
+</script>
+</html>
