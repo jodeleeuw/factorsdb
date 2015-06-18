@@ -1,0 +1,52 @@
+---
+title: "Visual Search"
+description: "A basic visual search task modeled after the first block of the third condition in Wang, Cavanagh, & Green (1994)."
+jspsych_version: 4.2
+categories:
+  - perception
+  - attention
+required_plugins:
+  - text
+  - visual-search-circle
+---
+
+// experiment parameters
+
+var number_of_trials_per_condition = 5; // there are 8 conditions
+
+// instructions
+
+var instructions = {
+  type: 'text',
+  text: 'Hello, world!',
+  cont_key: 'enter'
+}
+
+// randomize trial order
+
+var factors = {
+  target_present: [true, false],
+  set_size: [2,3,4,6]
+}
+
+var randomized_trial_order = jsPsych.randomization.factorial(factors, number_of_trials_per_condition, true);
+
+// add visual search trials
+
+var vsearch_block = {
+    type: 'visual-search-circle',
+    target_present: randomized_trial_order.target_present,
+    set_size: randomized_trial_order.set_size,
+    target: "{{ site.baseurl }}/assets/normalN.gif",
+    foil: "{{ site.baseurl }}/assets/backwardN.gif",
+    fixation_image: "{{ site.baseurl }}/assets/fixation.jpg",
+    timing_max_search: 2000
+};
+
+// start the experiment
+
+jsPsych.init({
+  experiment_structure: [instructions, vsearch_block],
+  display_element: $('#jspsych-target'),
+  on_finish: function(){ jsPsych.data.displayData() }
+})
