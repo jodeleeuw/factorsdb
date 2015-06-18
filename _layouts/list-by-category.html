@@ -1,0 +1,25 @@
+{% include header.html %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        {% include sidebar.html %}
+      </div>
+      <div class="col-md-9">
+        <h1>{{ page.category | capitalize }} experiments</h1>
+        {% for exp in site.experiments %}
+          {% if exp.categories contains page.category %}
+          <div class="panel panel-default">
+            <div class="panel-heading">{{ exp.title }}</div>
+            <div class="panel-body">
+              <p> {{ exp.description }} </p>
+              <a href="{{ site.baseurl }}{{ exp.url }}" class="btn btn-default">Start Experiment</a>
+            </div>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+{% include footer.html %}

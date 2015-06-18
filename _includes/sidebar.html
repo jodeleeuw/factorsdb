@@ -1,2 +1,12 @@
-<h3>About Me</h3>
-<p>Some filler text about the creator of the site</p>
+<div class="list-group">
+  <h4>View by Category</h4>
+  {% for category in site.collections.experiments.categories %}
+    {% assign cnts = 0 %}
+    {% for exp in site.experiments %}
+      {% if exp.categories contains category %}
+        {% capture cnts %}{{ cnts | plus: '1' }}{% endcapture %}
+      {% endif %}
+    {% endfor %}
+    <a href="{{ site.baseurl }}/categories/{{category}}/" class="list-group-item"><span class="badge">{{ cnts }}</span>{{ category | capitalize }}</a>
+  {% endfor %}
+</div>
