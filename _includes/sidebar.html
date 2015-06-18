@@ -1,5 +1,11 @@
-<div class="list-group">
-  <h4>View by Category</h4>
+<hr>
+<ul class="nav nav-stacked">
+  <li><a href="{{ site.baseurl }}/"><span class="glyphicon glyphicon-home"></span> All Experiments</a></li>
+</ul>
+<hr>
+
+<h6>CATEGORIES</h6>
+<ul class="nav nav-stacked">
   {% for category in site.collections.experiments.categories %}
     {% assign cnts = 0 %}
     {% for exp in site.experiments %}
@@ -7,6 +13,10 @@
         {% capture cnts %}{{ cnts | plus: '1' }}{% endcapture %}
       {% endif %}
     {% endfor %}
-    <a href="{{ site.baseurl }}/categories/{{category}}/" class="list-group-item"><span class="badge">{{ cnts }}</span>{{ category | capitalize }}</a>
+  <li><a href="{{ site.baseurl }}/categories/{{category}}/" class="pre-badge">{{ category | capitalize }} <span class="badge">{{ cnts }}</span></a></li>
   {% endfor %}
-</div>
+</ul>
+<hr>
+<ul class="nav nav-stacked">
+  <li><a href="{{ site.baseurl }}/"><span class="glyphicon glyphicon-info-sign"></span> About this Site</a></li>
+</ul>
