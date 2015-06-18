@@ -1,0 +1,20 @@
+---
+title: "Second Demo Experiment"
+description: "This is a clone of the hello world experiment for testing the site layout"
+jspsych_version: 4.2
+categories: [attention, perception]
+required_plugins:
+  - text
+---
+
+var hello_world_trial = {
+  type: 'text',
+  text: 'Hello, world!',
+  cont_key: 'enter'
+}
+
+jsPsych.init({
+  experiment_structure: [hello_world_trial],
+  display_element: $('#jspsych-target'),
+  on_finish: function(){ jsPsych.data.displayData() }
+})
