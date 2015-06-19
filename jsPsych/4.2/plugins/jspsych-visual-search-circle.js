@@ -171,7 +171,7 @@
         }
 
         function clear_display() {
-          paper.clear();
+          display_element.html('');
         }
       }
 
