@@ -18,7 +18,12 @@ var number_of_trials_per_condition = 5; // there are 8 conditions
 
 var instructions = {
   type: 'text',
-  text: 'Hello, world!',
+  text: '<p>In this experiment, you will see be shown several screens containing '+
+    'the symbols below. Your job is to press J if the target symbol is on the screen. '+
+    'If there is no target symbol, then press F. You have a maximum of 2 seconds to respond.</p>'+
+    '<div style="float: left;"><img src='normalN.gif'></img><p>Target</p></div>'+
+    '<div class="float: right;"><img src='backwardN.gif'></img><p>Distractor</p></div>'+
+    '<p>Press enter when you are ready to begin.</p>'
   cont_key: 'enter'
 }
 
