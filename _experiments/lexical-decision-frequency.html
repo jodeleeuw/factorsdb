@@ -1,0 +1,101 @@
+---
+title: "Lexical Decision - Word Frequency"
+description: >
+  In a lexical decision task, participants classify whether a string of letters
+  is a word or a nonword. This version is based on one of the earliest lexical
+  decision tasks, reported in Rubenstein, Garfield, & Millikan, 1970. The
+  experiment tests response time for high and low frequency English words.
+jspsych_version: 4.2
+categories:
+  - memory
+required_plugins:
+  - single-stim
+  - text
+---
+
+/* experiment parameters */
+
+var low_frequency_words = [
+  'cove','turf','twig','foyer','denim','shrub','shawl','broom','chef','filth',
+  'sewer','ramp','merge','moth','tepid','fern','pest','disk','lung','pond'
+];
+var high_frequency_words = [
+  'chair','city','girl','food','dark','thing','black','green','child','wife',
+  'lady','brown','large','small','door','white','money','town','woman','word'
+];
+var nonwords = [
+  'cowe','turv','twif','foger','dewim','shrup','spawl','broop','thef','figth',
+  'semer','rawp','merhe','moch','tebid','ferd','mest','bisk','wung','pont',
+  'thair','ciny','birl','rood','zark','thidg','blact','gween','thild','wime',
+  'lapy','prown','larpe','swall','doop','whire','morey','vown','moman','vord'
+]
+
+/* create experiment timeline */
+
+var timeline = [];
+
+/* instructions */
+
+var instructions = {
+  type: 'text',
+  text: '<p>You are going to see a series of individual words, some of which are' +
+    ' actual English words, while others are nonsense words that look like '+
+    'English words. Your job is to indicate whether the word is a real English '+
+    'word as quickly and accurately as you can.</p>'+
+    '<p style="font-weight:bold;">Press Y if the word is an English word.</p>'+
+    '<p style="font-weight:bold;">Press N if the word is not an English word.</p>'+
+    '<p>Press enter to begin.</p>'
+}
+
+timeline.push(instructions);
+
+/* create test trials */
+
+var low_frequency_trials = [];
+for(var i in low_frequency_words){
+  low_frequency_trials.push({
+    type: 'single-stim',
+    stimuli: ['<p style="display:block; margin:auto; font-size:22px;">'+low_frequency_words[i]+'</p>'],
+    timing_response: 2500,
+    choices: ['y','n'],
+    is_html: true,
+    data: { word_type: 'low' }
+  });
+}
+
+var high_frequency_trials = [];
+for(var i in high_frequency_words){
+  high_frequency_trials.push({
+    type: 'single-stim',
+    stimuli: ['<p style="display:block; margin:auto; font-size:22px;">'+high_frequency_words[i]+'</p>'],
+    timing_response: 2500,
+    choices: ['y','n'],
+    is_html: true,
+    data: { word_type: 'high' }
+  });
+}
+
+var nonword_trials = [];
+for(var i in nonwords){
+  nonword_trials.push({
+    type: 'single-stim',
+    stimuli: ['<p style="display:block; margin:auto; font-size:22px;">'+nonwords[i]+'</p>'],
+    timing_response: 2500,
+    choices: ['y','n'],
+    is_html: true,
+    data: { word_type: 'nonword' }
+  });
+}
+
+var all_trials = low_frequency_trials.concat(high_frequency_trials, nonword_trials);
+all_trials = jsPsych.randomization.shuffle(all_trials);
+
+timeline = timeline.concat(all_trials);
+
+/* start the experiment */
+
+jsPsych.init({
+  display_element: $('#jspsych-target'),
+  experiment_structure: timeline,
+  on_finish: jsPsych.data.dispayData('csv')
+});
