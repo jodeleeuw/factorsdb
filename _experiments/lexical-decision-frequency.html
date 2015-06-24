@@ -24,7 +24,7 @@ var high_frequency_words = [
   'lady','brown','large','small','door','white','money','town','woman','word'
 ];
 var nonwords = [
-  'cowe','turv','twif','foger','dewim','shrup','spawl','broop','thef','figth',
+  'cowe','turv','twif','foger','dewim','shrup','spawl','broop','thef','finth',
   'semer','rawp','merhe','moch','tebid','ferd','mest','bisk','wung','pont',
   'thair','ciny','birl','rood','zark','thidg','blact','gween','thild','wime',
   'lapy','prown','larpe','swall','doop','whire','morey','vown','moman','vord'
@@ -55,7 +55,7 @@ var low_frequency_trials = [];
 for(var i in low_frequency_words){
   low_frequency_trials.push({
     type: 'single-stim',
-    stimuli: ['<p style="display:block; margin:auto; font-size:22px;">'+low_frequency_words[i]+'</p>'],
+    stimuli: ['<p style="text-align:center; font-size:32px;">'+low_frequency_words[i]+'</p>'],
     timing_response: 2500,
     choices: ['y','n'],
     is_html: true,
@@ -67,7 +67,7 @@ var high_frequency_trials = [];
 for(var i in high_frequency_words){
   high_frequency_trials.push({
     type: 'single-stim',
-    stimuli: ['<p style="display:block; margin:auto; font-size:22px;">'+high_frequency_words[i]+'</p>'],
+    stimuli: ['<p style="text-align:center; font-size:32px;">'+high_frequency_words[i]+'</p>'],
     timing_response: 2500,
     choices: ['y','n'],
     is_html: true,
@@ -79,7 +79,7 @@ var nonword_trials = [];
 for(var i in nonwords){
   nonword_trials.push({
     type: 'single-stim',
-    stimuli: ['<p style="display:block; margin:auto; font-size:22px;">'+nonwords[i]+'</p>'],
+    stimuli: ['<p style="text-align:center; font-size:32px;">'+nonwords[i]+'</p>'],
     timing_response: 2500,
     choices: ['y','n'],
     is_html: true,
