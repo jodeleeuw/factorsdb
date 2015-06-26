@@ -10,10 +10,12 @@ categories:
   - memory
 required_plugins:
   - single-stim
-  - text
+  - instructions
 ---
 
 /* experiment parameters */
+
+var max_response_time = 2500;
 
 var low_frequency_words = [
   'cove','turf','twig','foyer','denim','shrub','shawl','broom','chef','filth',
@@ -28,7 +30,8 @@ var nonwords = [
   'semer','rawp','merhe','moch','tebid','ferd','mest','bisk','wung','pont',
   'thair','ciny','birl','rood','zark','thidg','blact','gween','thild','wime',
   'lapy','prown','larpe','swall','doop','whire','morey','vown','moman','vord'
-]
+];
+
 
 /* create experiment timeline */
 
@@ -37,14 +40,16 @@ var timeline = [];
 /* instructions */
 
 var instructions = {
-  type: 'text',
-  text: '<p>You are going to see a series of individual words, some of which are' +
+  type: 'instructions',
+  pages: ['<p>You are going to see a series of individual words, some of which are' +
     ' actual English words, while others are nonsense words that look like '+
     'English words. Your job is to indicate whether the word is a real English '+
     'word as quickly and accurately as you can.</p>'+
     '<p style="font-weight:bold;">Press Y if the word is an English word.</p>'+
     '<p style="font-weight:bold;">Press N if the word is not an English word.</p>'+
-    '<p>Press enter to begin.</p>'
+    '<p>Click the button below to begin.</p>'],
+  allow_keys: false,
+  show_clickable_nav: true
 }
 
 timeline.push(instructions);
@@ -56,7 +61,7 @@ for(var i in low_frequency_words){
   low_frequency_trials.push({
     type: 'single-stim',
     stimuli: ['<p style="text-align:center; font-size:32px;">'+low_frequency_words[i]+'</p>'],
-    timing_response: 2500,
+    timing_response: max_response_time,
     choices: ['y','n'],
     is_html: true,
     data: { word_type: 'low' }
@@ -68,7 +73,7 @@ for(var i in high_frequency_words){
   high_frequency_trials.push({
     type: 'single-stim',
     stimuli: ['<p style="text-align:center; font-size:32px;">'+high_frequency_words[i]+'</p>'],
-    timing_response: 2500,
+    timing_response: max_response_time,
     choices: ['y','n'],
     is_html: true,
     data: { word_type: 'high' }
@@ -80,7 +85,7 @@ for(var i in nonwords){
   nonword_trials.push({
     type: 'single-stim',
     stimuli: ['<p style="text-align:center; font-size:32px;">'+nonwords[i]+'</p>'],
-    timing_response: 2500,
+    timing_response: max_response_time,
     choices: ['y','n'],
     is_html: true,
     data: { word_type: 'nonword' }
