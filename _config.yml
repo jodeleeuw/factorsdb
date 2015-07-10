@@ -1,8 +1,8 @@
 name: "FactorsDB"
 description: "Database of browser-based psychology experiments for teaching"
 
-url: "jodeleeuw.github.io/factorsdb"
-baseurl: "/factorsdb"
+url: "www.factorsdb.org"
+baseurl: ""
 
 paginate: 10
 
