@@ -1,9 +1,7 @@
 ---
-title: Hello, World!
+title: FactorsDB
 layout: default
 ---
-
-# experiment list
 
 {% for exp in site.experiments %}
 <div class="panel panel-default">
