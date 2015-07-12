@@ -48,14 +48,14 @@ experiments for a project, or to learn how to use
 You will need a free GitHub account to fork (copy) the FactorsDB repository.
 [Sign up here](http://www.github.com/join).
 
-##### Step 2: Fork the FactorsDB repository.
+#### Step 2: Fork the FactorsDB repository.
 
 Go to the [GitHub page for FactorsDB](http://github.com/jodeleeuw/factorsdb) and
 click the Fork button near the top right corner of the page.
 
 **IMAGE HERE**
 
-###### Step 3: Find the experiment you want to modify.
+#### Step 3: Find the experiment you want to modify.
 
 All of the experiments on FactorsDB are contained in the `_experiments/` folder
 of the repository. Open the folder to view a list of all the experiments. Find
@@ -65,7 +65,7 @@ document.
 
 **IMAGE HERE**
 
-### Step 4: Edit the document and commit your changes.
+#### Step 4: Edit the document and commit your changes.
 
 Edit the experiment file as you see fit. Create a new commit by writing a brief
 commit message in the box below the file contents and then click the green
@@ -76,7 +76,7 @@ Experiments on FactorsDB are written in JavaScript using the
 [jspsych library](http://www.jspsych.org). You can learn more about how jspsych
 works by reading the [jspsych documentation](http://docs.jspsych.org).
 
-### Step 5: View your modified experiment.
+#### Step 5: View your modified experiment.
 
 Once you have forked and made at least one change to the repository, GitHub will
 automatically build a new copy of the website linked to your account. You can
