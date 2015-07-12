@@ -24,7 +24,7 @@ web browser.
 FactorsDB was created by [Josh de Leeuw](http://pages.iu.edu/~jodeleeu) at
 Indiana University.
 
-## How to use FactorsDB for classroom demos
+## How to run experiments
 
 Find an experiment, either by looking at the
 [list of all experiments](index.html), or searching by category in the left nav
@@ -33,7 +33,7 @@ experiment. Experiments should run smoothly in any up-to-date web browser, but
 if you are having trouble try running the experiment in
 [Google Chrome](http://www.google.com/chrome).
 
-## How to modify experiments on FactorsDB
+## How to modify experiments
 
 The entire contents of the FactorsDB site exists as a
 [GitHub repository](http://github.com/jodeleeuw/factorsdb). You can create a
@@ -83,3 +83,17 @@ automatically build a new copy of the website linked to your account. You can
 view your copy of FactorsDB by going to
 http://<your-user-name>.github.io/factorsdb. For example, my GitHub user name is
 *jodeleeuw*, so I would go to [http://jodeleeuw.github.io/factorsdb].
+
+## How to contribute an experiment
+
+Contributing an experiment is a similar process to modifying an experiment, with
+a few extra steps. Follow the steps described above to create a GitHub account
+and fork the FactorsDB repository. Then follow the steps below.
+
+#### Step 1: Add a new .html file to the _experiments folder
+
+#### Step 2: Create the front-matter
+
+#### Step 3: Write the experiment code
+
+#### Step 4: Submit a pull request on the FactorsDB repository
