@@ -43,19 +43,19 @@ experiment file. This is a great way to let students try variations of different
 experiments for a project, or to learn how to use
 [jspsych](http://www.jspsych.org).
 
-### Step 1: Create a GitHub account.
+#### Step 1: Create a GitHub account.
 
 You will need a free GitHub account to fork (copy) the FactorsDB repository.
 [Sign up here](http://www.github.com/join).
 
-### Step 2: Fork the FactorsDB repository.
+##### Step 2: Fork the FactorsDB repository.
 
 Go to the [GitHub page for FactorsDB](http://github.com/jodeleeuw/factorsdb) and
 click the Fork button near the top right corner of the page.
 
 **IMAGE HERE**
 
-### Step 3: Find the experiment you want to modify.
+###### Step 3: Find the experiment you want to modify.
 
 All of the experiments on FactorsDB are contained in the `_experiments/` folder
 of the repository. Open the folder to view a list of all the experiments. Find
