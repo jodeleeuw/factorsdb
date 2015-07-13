@@ -132,3 +132,18 @@ Once you are done writing your experiment, you can submit a pull request to
 merge your changes with the FactorsDB repository. For more information about how
 to submit a pull request, see the GitHub documentation on
 [using pull requests](https://help.github.com/articles/using-pull-requests/).
+
+## Questions?
+
+If you need help using the site, modifying an experiment, or creating a new
+experiment, send me an e-mail at
+[josh.deleeuw@gmail.com](mailto:josh.deleeuw@gmail.com).
+
+If you find a bug, a broken link, or other technical problem with the site, post
+a new issue in the
+[GitHub issue tracker](https://github.com/jodeleeuw/factorsdb/issues). You
+should also use the issue tracker for requesting new experiments or features.
+
+If you need help with jspsych, try the
+[jspsych documentation](http://docs.jspsych.org) or the
+[jspsych support forum](https://groups.google.com/forum/#!forum/jspsych).
