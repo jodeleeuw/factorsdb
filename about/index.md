@@ -118,11 +118,11 @@ experiment.
 The rest of the file contains the JavaScript code to run your experiment. You do
 not need to write any of the standard HTML; it will be automatically rendered by
 Jekyll. The output HTML body tag contains a div with the ID jspsych-target:
-```html
+{% highlight html %}
 <body>
   <div id="jspsych-target"></div>
 </body>
-```
+{% endhighlight %}
 You should use `$('#jspsych-target')` as the parameter for `display_element` in
 the `jsPsych.init()` call for your experiment.
 
