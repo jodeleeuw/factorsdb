@@ -27,8 +27,8 @@ Indiana University.
 ## How to run experiments
 
 Find an experiment, either by looking at the
-[list of all experiments](index.html), or searching by category in the left nav
-on the [main page](index.html). Click **Start Experiment** to launch the desired
+[list of all experiments](index.html), or searching by category in the menu on
+the left. Click **Start Experiment** to launch the desired
 experiment. Experiments should run smoothly in any up-to-date web browser, but
 if you are having trouble try running the experiment in
 [Google Chrome](http://www.google.com/chrome).
@@ -92,8 +92,43 @@ and fork the FactorsDB repository. Then follow the steps below.
 
 #### Step 1: Add a new .html file to the _experiments folder
 
-#### Step 2: Create the front-matter
+All experiments are stored in the _experiments folder in the repository. To add
+a new experiment, create a new .html file in that folder. You can either create
+an empty .html file, or copy and rename one of the existing .html files. The
+copy-and-rename strategy has the added benefit of giving you a template to
+modify.
+
+#### Step 2: Create the front matter
+
+At the top of all experiment files is a section called *front matter*. This is a
+term from the [Jekyll engine](http://jekyllrb.com/docs/frontmatter/) used to
+render the GitHub repository into the FactorsDB website. The front matter is
+written in [YAML](http://yaml.org/). This section is where
+various experiment parameters are specified. The valid parameters are:
+
+* `title`: The title of your experiment.
+* `description`: A description of your experiment.
+* `jspsych_version`: The version of jspsych used to run your experiment.
+* `required_plugins`: The jspsych plugins that are required to run the
+experiment.
+* `categories`: The experiment categories that your experiment belongs in.
 
 #### Step 3: Write the experiment code
 
+The rest of the file contains the JavaScript code to run your experiment. You do
+not need to write any of the standard HTML; it will be automatically rendered by
+Jekyll. The output HTML body tag contains a div with the ID jspsych-target:
+```html
+<body>
+  <div id="jspsych-target"></div>
+</body>
+```
+You should use `$('#jspsych-target')` as the parameter for `display_element` in
+the `jsPsych.init()` call for your experiment.
+
 #### Step 4: Submit a pull request on the FactorsDB repository
+
+Once you are done writing your experiment, you can submit a pull request to
+merge your changes with the FactorsDB repository. For more information about how
+to submit a pull request, see the GitHub documentation on
+[using pull requests](https://help.github.com/articles/using-pull-requests/).
