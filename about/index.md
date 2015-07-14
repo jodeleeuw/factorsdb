@@ -112,6 +112,8 @@ various experiment parameters are specified. The valid parameters are:
 * `required_plugins`: The jspsych plugins that are required to run the
 experiment.
 * `categories`: The experiment categories that your experiment belongs in.
+* `use_highcharts`: If `true`, loads the 
+[highcharts.js](http://www.highcharts.com/products/highcharts) graphing library.
 
 #### Step 3: Write the experiment code
 

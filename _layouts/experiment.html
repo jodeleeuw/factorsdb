@@ -10,6 +10,10 @@
       <script src="https://cdn.jsdelivr.net/snap.svg/0.3.0/snap.svg-min.js"></script>
     {% endif %}
   {% endfor %}
+  {% if page.use_highcharts == true %}
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src="http://code.highcharts.com/highcharts-more.js"></script>
+  {% endif %}
   <link href="{{ site.baseurl }}/jsPsych/{{ page.jspsych_version }}/css/jspsych.css" rel="stylesheet"></link>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <link rel="icon" type="image/png" href="{{ site.baseurl }}/assets/factors-logo.png">

@@ -1,0 +1,274 @@
+---
+title: "Divided Visual Field"
+description: >
+  This experiment demonstrates the divided visual field paradigm. Stimuli
+  are categorized on the basis of local (high frequency) or global (low
+  frequency) features. Some of the stimuli are presented to the left visual
+  field, and others to the right.
+jspsych_version: 4.3
+categories:
+  - perception
+required_plugins:
+  - single-stim
+  - instructions
+  - text
+use_highcharts: true
+---
+
+/* experiment parameters */
+
+var stimulus_duration = 150;
+var max_response_time = 5000;
+var fixation_time = 1500;
+var number_of_trials_per_type = 3;
+
+// pixel values below
+var left_offset = 100;
+var right_offset = 500;
+
+/* create experiment timeline */
+
+var timeline = [];
+
+/* instructions */
+
+var instructions = {
+  type: 'instructions',
+  pages: ['<p>On each trial of the experiment, a fixation cross (+) will appear '+
+    'in the center of the screen. Keep your gaze fixed on the cross. An image '+
+    'will appear to the left or right of the cross. You will respond to the '+
+    'content of the image. The next screen will explain what keys to press.</p>'],
+  allow_keys: false,
+  show_clickable_nav: true
+}
+
+timeline.push(instructions);
+
+/* block instructions */
+
+var global_instructions = {
+  type: 'single-stim',
+  stimuli: ['<p>Press H if you see either of these images</p>'+
+    '<img style="float: left;" src="{{ site.baseurl }}/assets/largeHsmallH.JPG"></img>'+
+    '<img style="float: left;" src="{{ site.baseurl }}/assets/largeHsmallL.JPG"></img>'+
+    '<p style="clear: both">Press L if you see either of these images</p>'+
+    '<img style="float: left;" src="{{ site.baseurl }}/assets/largeLsmallH.JPG"></img>'+
+    '<img style="float: left;" src="{{ site.baseurl }}/assets/largeLsmallL.JPG"></img>'+
+    '<p style="clear: both">Press H or L to begin.</p>'
+  ],
+  is_html: true,
+  choices: ['h','l']
+}
+
+var local_instructions = {
+  type: 'single-stim',
+  stimuli: ['<p>Press H if you see either of these images</p>'+
+    '<img style="float: left;" src="{{ site.baseurl }}/assets/largeHsmallH.JPG"></img>'+
+    '<img style="float: left;" src="{{ site.baseurl }}/assets/largeLsmallH.JPG"></img>'+
+    '<p style="clear: both">Press L if you see either of these images</p>'+
+    '<img style="float: left;" src="{{ site.baseurl }}/assets/largeHsmallL.JPG"></img>'+
+    '<img style="float: left;" src="{{ site.baseurl }}/assets/largeLsmallL.JPG"></img>'+
+    '<p style="clear: both">Press H or L to begin.</p>'
+  ],
+  is_html: true,
+  choices: ['h','l']
+}
+
+/* create test trials */
+
+var global_block_trials = [];
+var local_block_trials = [];
+
+var fixation_trial = {
+  type: 'single-stim',
+  stimuli: ['<div style="position: relative;"><img style="position: absolute; left: 300px" src="{{ site.baseurl }}/assets/200x200fixation.png"></img></div>'],
+  timing_response: fixation_time,
+  is_html: true,
+  choices: 'none',
+  timing_post_trial: 0
+}
+
+var block_global_trials = [
+  {src: 'largeHsmallH.jpg', global: 'h', local: 'h', category: 'h', vf: 'left'},
+  {src: 'largeHsmallL.jpg', global: 'h', local: 'l', category: 'h', vf: 'left'},
+  {src: 'largeLsmallH.jpg', global: 'l', local: 'h', category: 'l', vf: 'left'},
+  {src: 'largeLsmallL.jpg', global: 'l', local: 'l', category: 'l', vf: 'left'},
+  {src: 'largeHsmallH.jpg', global: 'h', local: 'h', category: 'h', vf: 'right'},
+  {src: 'largeHsmallL.jpg', global: 'h', local: 'l', category: 'h', vf: 'right'},
+  {src: 'largeLsmallH.jpg', global: 'l', local: 'h', category: 'l', vf: 'right'},
+  {src: 'largeLsmallL.jpg', global: 'l', local: 'l', category: 'l', vf: 'right'}
+];
+
+var all_block_global_trials = jsPsych.randomization.repeat(block_global_trials, number_of_trials_per_type);
+
+for(var i=0; i < all_block_global_trials.length; i++){
+  var offset = all_block_global_trials[i].vf == 'left' ? left_offset : right_offset;
+
+  var test_trial = {
+    type: 'single-stim',
+    stimuli: ['<div style="position: relative;"><img style="position: absolute; left: '+offset+'px" src="{{ site.baseurl }}/assets/'+all_block_global_trials[i].src+'"></img></div>'],
+    timing_stim: stimulus_duration,
+    timing_response: max_response_time,
+    is_html: true,
+    choices: ['h','l'],
+    data: {
+      global: all_block_global_trials[i].global,
+      local: all_block_global_trials[i].local,
+      category: all_block_global_trials[i].category,
+      visual_field: all_block_global_trials[i].vf,
+      test_type: 'global'
+    },
+    on_finish: function(data){
+      var correct = false;
+      if(data.key_press != -1){
+        var key_letter = data.key_press == 76 ? 'l' : 'h';
+        correct = key_letter == data.category;
+      }
+      jsPsych.data.addDataToLastTrial({correct: correct });
+    }
+  }
+  global_block_trials.push(fixation_trial);
+  global_block_trials.push(test_trial);
+}
+
+var block_local_trials = [
+  {src: 'largeHsmallH.jpg', global: 'h', local: 'h', category: 'l', vf: 'left'},
+  {src: 'largeHsmallL.jpg', global: 'h', local: 'l', category: 'l', vf: 'left'},
+  {src: 'largeLsmallH.jpg', global: 'l', local: 'h', category: 'h', vf: 'left'},
+  {src: 'largeLsmallL.jpg', global: 'l', local: 'l', category: 'h', vf: 'left'},
+  {src: 'largeHsmallH.jpg', global: 'h', local: 'h', category: 'l', vf: 'right'},
+  {src: 'largeHsmallL.jpg', global: 'h', local: 'l', category: 'l', vf: 'right'},
+  {src: 'largeLsmallH.jpg', global: 'l', local: 'h', category: 'h', vf: 'right'},
+  {src: 'largeLsmallL.jpg', global: 'l', local: 'l', category: 'h', vf: 'right'}
+];
+
+var all_block_local_trials = jsPsych.randomization.repeat(block_local_trials, number_of_trials_per_type);
+
+for(var i=0; i < all_block_local_trials.length; i++){
+  var offset = all_block_local_trials[i].vf == 'left' ? left_offset : right_offset;
+
+  var test_trial = {
+    type: 'single-stim',
+    stimuli: ['<div style="position: relative;"><img style="position: absolute; left: '+offset+'px" src="{{ site.baseurl }}/assets/'+all_block_local_trials[i].src+'"></img></div>'],
+    timing_stim: stimulus_duration,
+    timing_response: max_response_time,
+    is_html: true,
+    choices: ['h','l'],
+    data: {
+      global: all_block_local_trials[i].global,
+      local: all_block_local_trials[i].local,
+      category: all_block_local_trials[i].category,
+      visual_field: all_block_local_trials[i].vf,
+      test_type: 'local'
+    },
+    on_finish: function(data){
+      var correct = false;
+      if(data.key_press != -1){
+        var key_letter = data.key_press == 76 ? 'l' : 'h';
+        correct = key_letter == data.category;
+      }
+      jsPsych.data.addDataToLastTrial({correct: correct });
+    }
+  }
+  local_block_trials.push(fixation_trial);
+  local_block_trials.push(test_trial);
+}
+
+/* build timeline */
+
+var first = jsPsych.randomization.sample(['global','local'], 1)[0];
+if(first == 'global'){
+  timeline.push(global_instructions);
+  timeline = timeline.concat(global_block_trials);
+  timeline.push(local_instructions);
+  timeline = timeline.concat(local_block_trials);
+} else {
+  timeline.push(local_instructions);
+  timeline = timeline.concat(local_block_trials);
+  timeline.push(global_instructions);
+  timeline = timeline.concat(global_block_trials);
+}
+
+/* function for plotting bar chart */
+
+function summaryData(){
+  var alldata = jsPsych.data.getData();
+  var rt_data = {
+    left: { local: [], global: [] },
+    right: { local: [], global: [] }
+  }
+  for(var i in alldata){
+    if(typeof alldata[i].test_type !== 'undefined'){
+      var vf = alldata[i].visual_field;
+      var ft = alldata[i].test_type;
+      if(alldata[i].correct){
+        rt_data[vf][ft].push(alldata[i].rt);
+      }
+    }
+  }
+  var summary_data = {
+    left: { local: {}, global: {} },
+    right: { local: {}, global: {} }
+  }
+  summary_data.left.local.mean = mean(rt_data.left.local);
+  summary_data.left.global.mean = mean(rt_data.left.global);
+  summary_data.right.local.mean = mean(rt_data.right.local);
+  summary_data.right.global.mean = mean(rt_data.right.global);
+  summary_data.left.local.sd = sd(rt_data.left.local);
+  summary_data.left.global.sd = sd(rt_data.left.global);
+  summary_data.right.local.sd = sd(rt_data.right.local);
+  summary_data.right.global.sd = sd(rt_data.right.global);
+  return summary_data;
+}
+
+function plot(summary_data){
+  $('#jspsych-target').append('<div id="highchart"></div>');
+  $('#highchart').highcharts({
+    chart: { type: 'column' },
+    title: { text: 'Experiment Results' },
+    xAxis: { categories: ['Left Visual Field', 'Right Visual Field'] },
+    yAxis: { min: 0, title: { text: 'Response Time (ms)' }},
+    series: [
+      {name: 'Global Features', data: [summary_data.left.global.mean, summary_data.right.global.mean]},
+      {name: 'Global Error', type: 'errorbar', data: [
+        [summary_data.left.global.mean - summary_data.left.global.sd , summary_data.left.global.mean + summary_data.left.global.sd],
+        [summary_data.right.global.mean - summary_data.right.global.sd , summary_data.right.global.mean + summary_data.right.global.sd]
+      ]},
+      {name: 'Local Features', data: [summary_data.left.local.mean, summary_data.right.local.mean]},
+      {name: 'Local Error', type: 'errorbar', data: [
+        [summary_data.left.local.mean - summary_data.left.local.sd , summary_data.left.local.mean + summary_data.left.local.sd],
+        [summary_data.right.local.mean - summary_data.right.local.sd , summary_data.right.local.mean + summary_data.right.local.sd]
+      ]}
+    ]
+  });
+}
+
+function mean(vector){
+  var sum = 0;
+  for(var i in vector){
+    sum += vector[i];
+  }
+  return sum / vector.length;
+}
+
+function sd(vector){
+  var m = mean(vector);
+  var sumvar = 0;
+  for(var i in vector){
+    sumvar += Math.pow(vector[i]-m,2);
+  }
+  var sd = Math.sqrt(sumvar/vector.length);
+  return sd;
+}
+
+/* start the experiment */
+
+jsPsych.init({
+  display_element: $('#jspsych-target'),
+  experiment_structure: timeline,
+  show_progress_bar: true,
+  on_finish: function(){
+    var s = summaryData();
+    plot(s);
+  }
+});
