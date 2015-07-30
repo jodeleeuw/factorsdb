@@ -12,7 +12,7 @@ permalink: pretty
 collections:
   experiments:
     output: true
-    categories: ['attention', 'perception', 'memory']
+    categories: ['attention', 'perception', 'memory', 'executive function']
 
 defaults:
   - scope:

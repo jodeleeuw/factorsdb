@@ -1,0 +1,211 @@
+---
+title: "Task Switching"
+description: >
+  This experiment tests how your response times to simple judgments about numbers
+  are affected by whether or not you are switching what kinds of judgment you are
+  making. You'll indicate whether numbers are even or odd, or indicate whether
+  they are large or small. Sometimes you'll do the same task several times in a
+  row, and other times you will switch between tasks.
+jspsych_version: 4.3
+categories:
+  - executive function
+required_plugins:
+  - single-stim
+  - instructions
+  - text
+---
+
+/* experiment parameters */
+
+var trials_per_type = 6;
+
+
+/* create experiment timeline */
+
+var timeline = [];
+
+/* instructions */
+
+var instructions = {
+  type: 'instructions',
+  pages: ['<p>On each trial, you will see a number on the screen between 1 and 9. '+
+    'On some screens, the words ODD/EVEN will appear above the number, on '+
+    'other trials the words SMALL/BIG will appear above the number.</p>'+
+    '<p style="font-weight:bold;">If ODD/EVEN appears, press A if the number is ODD or press S if the number is EVEN.</p>'+
+    '<p style="font-weight:bold;">If SMALL/BIG appears, press K if the number is less than 5 or press L if the number is greater than 5.</p>'+
+    '<p>Click the button below to begin.</p>'],
+  allow_keys: false,
+  show_clickable_nav: true
+}
+
+timeline.push(instructions);
+
+/* helper function for generating HTML formatted stimuli */
+
+function createStimulus(number, category){
+  var html = '';
+  if(category == 'size'){
+    html += '<p>SMALL/BIG</p>';
+  }
+  if(category == 'parity'){
+    html += '<p>ODD/EVEN</p>';
+  }
+  html += '<p>'+number+'</p>';
+}
+
+/* create test trials */
+
+var trial_types = {
+  category: ['size','parity'],
+  number: [1,2,3,4,6,7,8,9]
+}
+
+var trial_order = jsPsych.randomization.factorial(trial_types, trials_per_type);
+
+trial_order.switch = [false];
+for(var i=1; i<trial_order.length; i++){
+  trial_order.switch.push(trial_order[i].category == trial_order[i-1].category);
+}
+
+for(var i=0; i<trial_order.length; i++){
+
+  var incorrect_text = '';
+  var answer_key = [];
+  var choices = [];
+  if(trial_order[i].category == 'size'){
+    incorrect_text = '<p>Incorrect. Press K if the number is less than 5 or press L if the number is greater than 5.</p>';
+    choices = ['a','s'];
+    if(trial_order[i].number < 5){
+      answer_key.push('A');
+    } else {
+      answer_key.push('S');
+    }
+  } else {
+    incorrect_text = '<p>Incorrect. Press A if the number is odd or press S if the number is even.</p>';
+    choices = ['l','k'];
+    if(trial_order[i].number % 2 == 0){
+      answer_key.push('L');
+    } else {
+      answer_key.push('K');
+    }
+  }
+
+  var trial = {
+    type: 'categorize',
+    stimuli: [createStimulus(trial_order[i].number, trial_order[i].category)],
+    choices: []
+    correct_text: '<p>Correct.</p>',
+    incorrect_text: incorrect_text,
+    key_answer: answer_key,
+    is_html: true,
+    data: { switch_type: (trial_order[i].switch) ? 'switch' : 'nonswitch' }
+  }
+
+  timeline.push(trial);
+}
+
+/* show summary data */
+
+function summarizeData(data){
+  var response_times = {
+    switch: [],
+    nonswitch: [],
+    mean: {},
+    sd: {}
+  }
+  var accuracy = {
+    switch: [],
+    nonswitch: [],
+    mean: {},
+    sd: {}
+  }
+  for(var i in data){
+    if(typeof data[i].switch_type !== 'undefined'){
+      // accuracy
+      var val = data[i].correct ? 1 : 0;
+      accuracy[data[i].switch_type].push(val);
+
+      // rt
+      if(data[i].correct) {
+        response_times[data[i].switch_type].push(data[i].rt);
+      }
+    }
+  }
+
+  response_times.mean.switch = mean(response_times.switch);
+  response_times.mean.nonswitch = mean(response_times.nonswitch);
+  response_times.sd.switch = sd(response_times.switch);
+  response_times.sd.nonswitch = sd(response_times.nonswitch);
+  accuracy.mean.switch = mean(accuracy.switch);
+  accuracy.mean.nonswitch = mean(accuracy.nonswitch);
+  accuracy.sd.switch = sd(accuracy.switch);
+  accuracy.sd.nonswitch = sd(accuracy.nonswitch);
+
+  return {
+    rt: response_times,
+    accuracy: accuracy
+  }
+}
+
+function mean(arr){
+  var sum = 0;
+  for(i in arr){
+    sum += arr[i]
+  }
+  return sum / arr.length;
+}
+
+function sd(vector){
+  var m = mean(vector);
+  var sumvar = 0;
+  for(var i in vector){
+    sumvar += Math.pow(vector[i]-m,2);
+  }
+  var sd = Math.sqrt(sumvar/vector.length);
+  return sd;
+}
+
+var show_data_trial = {
+  type: 'text',
+  text: function() {
+    var rt_data = compute_mean_RTs(jsPsych.data.getData());
+    var message = "<p>You completed the experiment! You responded correctly on "+
+      rt_data.accuracy+"% of the trials.</p><p>Your average response time for "+
+      "trials where the task switched was "+Math.floor(rt_data.switch)+"ms.</p>"+
+      "<p>Your average response time for trials where the task stayed the same"+
+      " was "+Math.floor(rt_data.nonswitch)+"ms.</p>";
+    return message;
+  }
+}
+
+timeline.push(show_data_trial);
+
+function plot(summary_data){
+  $('#jspsych-target').append('<div id="highchart"></div>');
+  $('#highchart').highcharts({
+    chart: { type: 'column' },
+    title: { text: 'Experiment Results' },
+    xAxis: { categories: ['Task stayed the same', 'Task switched'] },
+    yAxis: { min: 0, title: { text: 'Response Time (ms)' }},
+    series: [
+      {name: 'RT data', data: [summary_data.rt.mean.nonswitch, summary_data.rt.mean.switch]},
+      {name: 'RT Error', type: 'errorbar', data: [
+        [summary_data.rt.mean.nonswitch - summary_data.rt.sd.nonswitch , summary_data.rt.mean.nonswitch + summary_data.rt.sd.nonswitch],
+        [summary_data.rt.mean.switch - summary_data.rt.sd.switch , summary_data.rt.mean.switch + summary_data.rt.sd.switch]
+      ]},
+      {name: 'Accuracy', data: [summary_data.accuracy.mean.nonswitch, summary_data.accuracy.mean.switch]},
+      {name: 'Accuracy Error', type: 'errorbar', data: [
+        [summary_data.accuracy.mean.nonswitch - summary_data.accuracy.sd.nonswitch , summary_data.accuracy.mean.nonswitch + summary_data.accuracy.sd.nonswitch],
+        [summary_data.accuracy.mean.switch - summary_data.accuracy.sd.switch , summary_data.accuracy.mean.switch + summary_data.accuracy.sd.switch]
+      ]}
+    ]
+  });
+}
+
+/* start the experiment */
+
+jsPsych.init({
+  display_element: $('#jspsych-target'),
+  experiment_structure: timeline,
+  on_finish: function(){ plot(summarizeData(jsPsych.data.getData())); }
+});
