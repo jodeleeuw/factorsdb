@@ -44,14 +44,15 @@ timeline.push(instructions);
 /* helper function for generating HTML formatted stimuli */
 
 function createStimulus(number, category){
-  var html = '';
+  var html = '<div style="text-align: center;">';
   if(category == 'size'){
     html += '<p>SMALL/BIG</p>';
   }
   if(category == 'parity'){
     html += '<p>ODD/EVEN</p>';
   }
-  html += '<p>'+number+'</p>';
+  html += '<p style="font-size: 22px;">'+number+'</p>';
+  html += '</div>'
   return html;
 }
 
@@ -76,19 +77,19 @@ for(var i=0; i<trial_order.length; i++){
   var choices = [];
   if(trial_order[i].category == 'size'){
     incorrect_text = '<p>Incorrect. Press K if the number is less than 5 or press L if the number is greater than 5.</p>';
-    choices = ['a','s'];
+    choices = ['k','l'];
     if(trial_order[i].number < 5){
-      answer_key.push('A');
+      answer_key.push('k');
     } else {
-      answer_key.push('S');
+      answer_key.push('l');
     }
   } else {
     incorrect_text = '<p>Incorrect. Press A if the number is odd or press S if the number is even.</p>';
-    choices = ['l','k'];
+    choices = ['a','s'];
     if(trial_order[i].number % 2 == 0){
-      answer_key.push('L');
+      answer_key.push('a');
     } else {
-      answer_key.push('K');
+      answer_key.push('s');
     }
   }
 
