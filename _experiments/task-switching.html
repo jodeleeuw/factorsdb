@@ -197,11 +197,6 @@ function plot(summary_data){
       {name: 'RT Error', type: 'errorbar', data: [
         [summary_data.rt.mean.nonswitch - summary_data.rt.sd.nonswitch , summary_data.rt.mean.nonswitch + summary_data.rt.sd.nonswitch],
         [summary_data.rt.mean.switch - summary_data.rt.sd.switch , summary_data.rt.mean.switch + summary_data.rt.sd.switch]
-      ]},
-      {name: 'Accuracy', data: [summary_data.accuracy.mean.nonswitch, summary_data.accuracy.mean.switch]},
-      {name: 'Accuracy Error', type: 'errorbar', data: [
-        [summary_data.accuracy.mean.nonswitch - summary_data.accuracy.sd.nonswitch , summary_data.accuracy.mean.nonswitch + summary_data.accuracy.sd.nonswitch],
-        [summary_data.accuracy.mean.switch - summary_data.accuracy.sd.switch , summary_data.accuracy.mean.switch + summary_data.accuracy.sd.switch]
       ]}
     ]
   });
