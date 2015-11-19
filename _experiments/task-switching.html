@@ -143,6 +143,7 @@ function summarizeData(data){
   accuracy.mean.nonswitch = mean(accuracy.nonswitch);
   accuracy.sd.switch = sd(accuracy.switch);
   accuracy.sd.nonswitch = sd(accuracy.nonswitch);
+  accuracy.overall = mean(accuracy.switch.concat(accuracy.nonswitch));
 
   return {
     rt: response_times,
@@ -171,12 +172,12 @@ function sd(vector){
 var show_data_trial = {
   type: 'text',
   text: function() {
-    var rt_data = compute_mean_RTs(jsPsych.data.getData());
+    var rt_data = summarizeData(jsPsych.data.getData());
     var message = "<p>You completed the experiment! You responded correctly on "+
-      rt_data.accuracy+"% of the trials.</p><p>Your average response time for "+
-      "trials where the task switched was "+Math.floor(rt_data.switch)+"ms.</p>"+
+      rt_data.accuracy.overall+"% of the trials.</p><p>Your average response time for "+
+      "trials where the task switched was "+Math.floor(rt_data.rt.mean.switch)+"ms.</p>"+
       "<p>Your average response time for trials where the task stayed the same"+
-      " was "+Math.floor(rt_data.nonswitch)+"ms.</p>";
+      " was "+Math.floor(rt_data.rt.mean.nonswitch)+"ms.</p>";
     return message;
   }
 }
