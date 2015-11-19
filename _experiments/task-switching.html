@@ -79,17 +79,17 @@ for(var i=0; i<trial_order.length; i++){
     incorrect_text = '<p class="center-content">Incorrect. Press K if the number is less than 5 or press L if the number is greater than 5.</p>';
     choices = ['k','l'];
     if(trial_order[i].number < 5){
-      answer_key.push('k');
+      answer_key.push(75);
     } else {
-      answer_key.push('l');
+      answer_key.push(76);
     }
   } else {
     incorrect_text = '<p class="center-content">Incorrect. Press A if the number is odd or press S if the number is even.</p>';
     choices = ['a','s'];
     if(trial_order[i].number % 2 == 0){
-      answer_key.push('a');
+      answer_key.push(65);
     } else {
-      answer_key.push('s');
+      answer_key.push(83);
     }
   }
 
