@@ -18,7 +18,7 @@ required_plugins:
 
 /* experiment parameters */
 
-var trials_per_type = 3;
+var trials_per_type = 1;
 
 
 /* create experiment timeline */
@@ -65,9 +65,9 @@ var trial_types = {
 
 var trial_order = jsPsych.randomization.factorial(trial_types, trials_per_type);
 
-trial_order.switch = [false];
+trial_order[0].switch = false;
 for(var i=1; i<trial_order.length; i++){
-  trial_order.switch.push(trial_order[i].category == trial_order[i-1].category);
+  trial_order[i].switch.push(trial_order[i].category == trial_order[i-1].category);
 }
 
 for(var i=0; i<trial_order.length; i++){
